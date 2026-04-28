@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  price         Float
+  originalPrice Float?
+  img           String
+  hoverImg      String?
+  categories    String // Stored as comma-separated string for simplicity
+  badge         String?
+  stock         Int      @default(100)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Order {
+  id            String    @id @default(cuid())
+  customerName  String
+  customerEmail String
+  status        String    @default("Pending") // Pending, Shipped, Delivered, Cancelled
+  totalAmount   Float
+  items         String // JSON string of items
+  customerId    String?
+  customer      Customer? @relation(fields: [customerId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Customer {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  phone      String?
+  location   String?
+  tier       String   @default("Bronze") // Bronze, Silver, Gold
+  totalSpend Float    @default(0)
+  orders     Order[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model AdminSettings {
+  id               String   @id @default(cuid())
+  firstName        String   @default("Admin")
+  lastName         String   @default("User")
+  email            String   @unique
+  bio              String?
+  emailAlerts      Boolean  @default(true)
+  orderNotifs      Boolean  @default(true)
+  marketingUpdates Boolean  @default(false)
+  avatarUrl        String?
+  updatedAt        DateTime @updatedAt
+}
+
+model CMSContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  section   String   @default("general")
+  updatedAt DateTime @updatedAt
+}

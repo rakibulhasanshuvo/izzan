@@ -1,0 +1,76 @@
+/* stylelint-disable */
+/* css-disable-next-line */
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #607c64;
+  --color-primary-dark: #4a5f4d;
+  --color-primary-light: #8ca391;
+  
+  --color-background-light: #fdfbf7;
+  --color-background-dark: #1a1f1b;
+  
+  --color-secondary-light: #e2e8df;
+  --color-secondary-dark: #2d3730;
+  
+  --color-text-light: #333333;
+  --color-text-dark: #f8f6f0;
+  
+  --color-accent-gold: #d4af37;
+  --color-accent-gold-light: #e5c566;
+
+  --font-display: var(--font-playfair), serif;
+  --font-body: var(--font-lato), sans-serif;
+}
+
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  ::selection {
+    background-color: #8ca391;
+    color: white;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f8f6f0;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: #1a1f1b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #8ca391;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #607c64;
+  }
+}
+
+/* Standard CSS Keyframes to ensure functionality even if config merging is delayed */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+/* Fallback utilities for marquee if needed */
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 40s linear infinite;
+}
