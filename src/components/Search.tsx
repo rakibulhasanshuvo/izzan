@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Search as SearchIcon, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { products, Product } from "@/lib/mockData";
+import { products } from "@/lib/mockData";
+import { Product } from "@/generated/client";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,9 +27,9 @@ export function Search({ onViewAll }: SearchProps) {
 
     const filtered = products.filter((p) =>
       p.name.toLowerCase().includes(query.toLowerCase()) ||
-      p.categories.some(c => c.toLowerCase().includes(query.toLowerCase()))
+      p.categories.toLowerCase().includes(query.toLowerCase())
     );
-    setResults(filtered.slice(0, 5));
+    setResults(filtered.slice(0, 5) as unknown as Product[]);
   }, [query]);
 
   useEffect(() => {

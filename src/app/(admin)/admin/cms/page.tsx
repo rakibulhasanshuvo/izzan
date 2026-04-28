@@ -1,7 +1,7 @@
 import React from "react";
 import { prisma } from "@/lib/db";
 import CMSManagement from "@/components/admin/CMSManagement";
-import { CMSContent } from "@prisma/client";
+import { CMSContent } from "@/generated/client";
 
 export default async function AdminCMS() {
   const cmsContent = await prisma.cMSContent.findMany({
