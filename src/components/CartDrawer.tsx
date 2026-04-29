@@ -5,6 +5,7 @@ import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { useEffect } from "react";
+import FocusTrap from "focus-trap-react";
 
 export function CartDrawer() {
   const { isCartOpen, toggleCart, cartItems, updateQuantity, removeFromCart, clearCart, cartTotal, cartCount } = useCart();
@@ -34,13 +35,17 @@ export function CartDrawer() {
           />
           
           {/* Drawer */}
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-[#f8f6f0] dark:bg-[#1a1f1b] z-[90] shadow-2xl flex flex-col"
-          >
+          <FocusTrap focusTrapOptions={{ fallbackFocus: "body", escapeDeactivates: false }}>
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-full md:w-[450px] bg-background-light dark:bg-[#1a1f1b] z-[90] shadow-2xl flex flex-col"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Shopping Cart"
+            >
             {/* Header */}
             <div className="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-white/50 dark:bg-gray-900/50 backdrop-blur-md sticky top-0 z-10">
               <div className="flex items-center space-x-3">
@@ -150,7 +155,8 @@ export function CartDrawer() {
                 <p className="text-[10px] text-gray-400 text-center mt-4 uppercase tracking-widest">Free Shipping on all orders</p>
               </div>
             )}
-          </motion.div>
+            </motion.div>
+          </FocusTrap>
         </>
       )}
     </AnimatePresence>

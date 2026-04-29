@@ -42,7 +42,7 @@ export function Community() {
           {communityImages.map((img, idx) => (
             <motion.div key={idx} variants={fadeIn} className={`w-full aspect-square relative overflow-hidden rounded-md ${idx > 1 ? 'hidden md:block' : ''}`}>
               <Image 
-                alt={`Community post ${idx + 1}`} 
+                alt=""
                 className="object-cover hover:scale-105 transition-transform duration-500" 
                 src={img} 
                 fill 

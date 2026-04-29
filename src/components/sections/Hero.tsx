@@ -54,7 +54,7 @@ export function Hero({ title, subtitle }: { title?: string, subtitle?: string })
         >
           {/* Add your short video source here, e.g., <source src="/video.mp4" type="video/mp4" /> */}
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent dark:from-black/80 dark:via-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30 md:to-transparent dark:from-black/95 dark:via-black/70"></div>
       </motion.div>
       <motion.div style={{ opacity }} className="relative z-10 max-w-[1600px] mx-auto px-6 md:px-12 w-full text-white">
         <motion.div 

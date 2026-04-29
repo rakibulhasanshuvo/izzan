@@ -40,7 +40,7 @@ export function Testimonials() {
           {testimonials.map((testimonial, idx) => (
             <motion.div key={idx} variants={fadeIn} className="flex flex-col items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
               <div className="w-full aspect-video relative overflow-hidden mb-6 rounded-md">
-                <Image alt={`Customer ${testimonial.author}`} className="object-cover" src={testimonial.img} fill />
+                <Image alt="" className="object-cover" src={testimonial.img} fill />
               </div>
               <p className="italic mb-4 text-gray-700 dark:text-gray-300">{testimonial.quote}</p>
               <p className="font-semibold text-sm mb-2 dark:text-gray-100">- {testimonial.author}</p>
