@@ -6,18 +6,7 @@ import { cn } from "@/lib/utils";
 import ProductEditorModal from "./ProductEditorModal";
 import { toast } from "sonner";
 
-type Product = {
-  id?: string;
-  name: string;
-  description: string | null;
-  price: number;
-  originalPrice: number | null;
-  img: string;
-  hoverImg: string | null;
-  categories: string;
-  badge: string | null;
-  stock: number;
-};
+import { Product } from "@/generated/client";
 
 interface ProductManagementProps {
   initialProducts: Product[];
@@ -52,6 +41,10 @@ export default function ProductManagement({ initialProducts }: ProductManagement
   const handleEdit = (product: Product) => {
     setEditingProduct(product);
     setIsModalOpen(true);
+  };
+
+  const handleSaveWrapper = async (formData: Partial<Product>) => {
+    await handleSave(formData as Product);
   };
 
   const handleSave = async (formData: Product) => {
@@ -278,7 +271,7 @@ export default function ProductManagement({ initialProducts }: ProductManagement
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         product={editingProduct}
-        onSave={handleSave}
+        onSave={handleSaveWrapper}
       />
     </>
   );

@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { X } from "lucide-react";
-import { Product } from "@/lib/mockData";
+import { Product } from "@/generated/client";
 import { ProductCard } from "./ProductCard";
 import { useEffect, useRef } from "react";
 

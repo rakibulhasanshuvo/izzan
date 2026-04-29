@@ -1,7 +1,7 @@
 import React from "react";
 import { prisma } from "@/lib/db";
 import SettingsFormClient from "@/components/admin/SettingsFormClient";
-import { AdminSettings } from "@prisma/client";
+import { AdminSettings } from "@/generated/client";
 
 export default async function SettingsPage() {
   const settings = await prisma.adminSettings.findFirst();

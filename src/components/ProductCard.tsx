@@ -1,25 +1,14 @@
 "use client";
 
 import Image from "next/image";
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number | null;
-  img: string;
-  hoverImg?: string | null;
-  categories?: string | string[];
-  badge?: string | null;
-};
+import { Product } from "@/generated/client";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 import { Check } from "lucide-react";
 
-interface ProductCardProps {
-  item: Product;
-}
 
-export function ProductCard({ item }: ProductCardProps) {
+
+export function ProductCard({ item }: { item: Product }) {
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -45,7 +34,7 @@ export function ProductCard({ item }: ProductCardProps) {
           src={item.img}
           fill
           draggable={false}
-          unoptimized
+
         />
 
         {/* Desktop-only Quick Add Overlay (Visible on hover) */}

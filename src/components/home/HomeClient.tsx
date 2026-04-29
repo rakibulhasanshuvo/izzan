@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CollectionDrawer } from "@/components/CollectionDrawer";
-import { Product } from "@prisma/client";
+import { Product } from "@/generated/client";
 
 // Sections
 import { Hero } from "@/components/sections/Hero";
@@ -27,17 +27,17 @@ interface HomeClientProps {
 export default function HomeClient({ products, cms }: HomeClientProps) {
   const [drawerContent, setDrawerContent] = useState<{ title: string; products: Product[] } | null>(null);
 
-  const bestSellers = products.filter(p => p.categories.includes("Best Sellers"));
-  const newArrivals = products.filter(p => p.categories.includes("New Arrivals"));
-  const saleItems = products.filter(p => p.categories.includes("Sale"));
+  const bestSellers = useMemo(() => products.filter(p => p.categories.includes("Best Sellers")), [products]);
+  const newArrivals = useMemo(() => products.filter(p => p.categories.includes("New Arrivals")), [products]);
+  const saleItems = useMemo(() => products.filter(p => p.categories.includes("Sale")), [products]);
 
-  const handleExplore = (title: string, products: Product[]) => {
+  const handleExplore = useCallback((title: string, products: Product[]) => {
     setDrawerContent({ title, products });
-  };
+  }, []);
 
   return (
     <>
-      <Header onViewAllProducts={() => handleExplore("Full Collection", products)} />
+      <Header onViewAllProducts={useCallback(() => handleExplore("Full Collection", products), [handleExplore, products])} />
       <main className="flex-1">
         <Hero title={cms.hero_title} subtitle={cms.hero_subtitle} />
         <Pillars />

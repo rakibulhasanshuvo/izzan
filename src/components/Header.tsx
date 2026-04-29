@@ -39,10 +39,10 @@ export function Header({ onViewAllProducts }: HeaderProps) {
             Izzan
           </Link>
           <nav className="hidden md:flex space-x-10">
-            <Link href="#shop" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Shop</Link>
-            <Link href="#story" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Story</Link>
-            <Link href="#discover" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Discover</Link>
-            <Link href="#reviews" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Reviews</Link>
+            <Link href="/#shop" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Shop</Link>
+            <Link href="/#story" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Story</Link>
+            <Link href="/#discover" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Discover</Link>
+            <Link href="/#reviews" className="text-[11px] tracking-[0.2em] font-bold uppercase hover:text-primary transition-colors">Reviews</Link>
           </nav>
           <div className="flex items-center space-x-4 md:space-x-6">
             <Search onViewAll={onViewAllProducts} />
@@ -91,10 +91,10 @@ export function Header({ onViewAllProducts }: HeaderProps) {
               className="md:hidden absolute top-full left-0 right-0 bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 overflow-hidden shadow-lg z-10"
             >
               <nav className="flex flex-col px-6 py-4 space-y-6">
-                <Link href="#shop" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Shop</Link>
-                <Link href="#story" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Story</Link>
-                <Link href="#discover" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Discover</Link>
-                <Link href="#reviews" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Reviews</Link>
+                <Link href="/#shop" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Shop</Link>
+                <Link href="/#story" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Story</Link>
+                <Link href="/#discover" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Discover</Link>
+                <Link href="/#reviews" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Reviews</Link>
               </nav>
             </motion.div>
           )}
