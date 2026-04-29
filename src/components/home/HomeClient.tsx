@@ -1,23 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CollectionDrawer } from "@/components/CollectionDrawer";
-import { Product as GeneratedProduct } from "@/generated/client";
-
-// Define local Product type to match what the child components expect
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice: number | null;
-  img: string;
-  hoverImg: string | null;
-  categories: string;
-  badge: string | null;
-};
-
+import { Product } from "@/generated/client";
 
 // Sections
 import { Hero } from "@/components/sections/Hero";
@@ -40,29 +27,17 @@ interface HomeClientProps {
 export default function HomeClient({ products, cms }: HomeClientProps) {
   const [drawerContent, setDrawerContent] = useState<{ title: string; products: Product[] } | null>(null);
 
-  // Transform to local Product type to remove description, stock, createdAt, updatedAt
-  const localProducts: Product[] = products.map(p => ({
-    id: p.id,
-    name: p.name,
-    price: p.price,
-    originalPrice: p.originalPrice,
-    img: p.img,
-    hoverImg: p.hoverImg,
-    categories: p.categories,
-    badge: p.badge,
-  }));
+  const bestSellers = useMemo(() => products.filter(p => p.categories.includes("Best Sellers")), [products]);
+  const newArrivals = useMemo(() => products.filter(p => p.categories.includes("New Arrivals")), [products]);
+  const saleItems = useMemo(() => products.filter(p => p.categories.includes("Sale")), [products]);
 
-  const bestSellers = localProducts.filter(p => p.categories.includes("Best Sellers"));
-  const newArrivals = localProducts.filter(p => p.categories.includes("New Arrivals"));
-  const saleItems = localProducts.filter(p => p.categories.includes("Sale"));
-
-  const handleExplore = (title: string, products: Product[]) => {
+  const handleExplore = useCallback((title: string, products: Product[]) => {
     setDrawerContent({ title, products });
-  };
+  }, []);
 
   return (
     <>
-      <Header onViewAllProducts={() => handleExplore("Full Collection", localProducts)} />
+      <Header onViewAllProducts={useCallback(() => handleExplore("Full Collection", products), [handleExplore, products])} />
       <main className="flex-1">
         <Hero title={cms.hero_title} subtitle={cms.hero_subtitle} />
         <Pillars />

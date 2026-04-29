@@ -5,16 +5,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-type Order = {
-  id: string;
-  customerName: string;
-  customerEmail: string;
-  status: string;
-  totalAmount: number;
-  items: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { Order } from "@/generated/client";
 
 export default function OrdersTableClient({ initialOrders }: { initialOrders: Order[] }) {
   const router = useRouter();

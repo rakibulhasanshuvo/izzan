@@ -5,6 +5,7 @@ import { motion, Variants } from "framer-motion";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
 import { products } from "@/lib/mockData";
+import { Product } from "@/generated/client";
 
 const fadeIn: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -27,7 +28,7 @@ export function Spotlight() {
   const handleAddToCart = () => {
     const lavenderDrift = products.find(p => p.id === "1");
     if (lavenderDrift) {
-      addToCart(lavenderDrift);
+      addToCart(lavenderDrift as unknown as Product);
       toast.success("Lavender Drift added to cart!", {
         description: "You've added 1 item to your sanctuary.",
       });

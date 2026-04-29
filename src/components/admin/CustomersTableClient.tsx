@@ -3,17 +3,7 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
-type Customer = {
-  id: string;
-  name: string;
-  email: string;
-  phone: string | null;
-  location: string | null;
-  tier: string;
-  totalSpend: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { Customer } from "@/generated/client";
 
 export default function CustomersTableClient({ initialCustomers }: { initialCustomers: Customer[] }) {
   const [customers] = useState<Customer[]>(initialCustomers);

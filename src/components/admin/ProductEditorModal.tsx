@@ -1,24 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-type Product = {
-  id?: string;
-  name: string;
-  description: string | null;
-  price: number;
-  originalPrice: number | null;
-  img: string;
-  hoverImg: string | null;
-  categories: string;
-  badge: string | null;
-  stock: number;
-};
+import { Product } from "@/generated/client";
 
 interface ProductEditorModalProps {
   isOpen: boolean;
   onClose: () => void;
   product: Product | null;
-  onSave: (product: Product) => void;
+  onSave: (product: Partial<Product>) => void;
 }
 
 export default function ProductEditorModal({
@@ -27,7 +16,7 @@ export default function ProductEditorModal({
   product,
   onSave,
 }: ProductEditorModalProps) {
-  const [formData, setFormData] = useState<Product>({
+  const [formData, setFormData] = useState<Partial<Product>>({
     name: "",
     description: "",
     price: 0,

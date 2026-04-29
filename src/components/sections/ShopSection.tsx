@@ -5,16 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 
-export type Product = {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice: number | null;
-  img: string;
-  hoverImg: string | null;
-  categories: string;
-  badge: string | null;
-};
+import { Product } from "@/generated/client";
 
 const fadeIn: Variants = {
   hidden: { opacity: 0, y: 20 },

@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/lib/mockData";
+import { Product } from "@/generated/client";
 import { ProductCard } from "./ProductCard";
 
 interface InfiniteMarqueeProps {

@@ -5,15 +5,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-type AdminSettings = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  bio: string | null;
-  emailAlerts: boolean;
-  orderNotifs: boolean;
-  marketingUpdates: boolean;
-};
+import { AdminSettings } from "@/generated/client";
 
 export default function SettingsFormClient({ initialSettings }: { initialSettings: AdminSettings }) {
   const router = useRouter();
