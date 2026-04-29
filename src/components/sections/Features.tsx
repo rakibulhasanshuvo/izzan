@@ -27,7 +27,7 @@ const features = [
 
 export function Features() {
   return (
-    <section id="discover" className="bg-background-light dark:bg-background-dark py-16 transition-colors duration-300 border-t border-gray-100 dark:border-gray-800">
+    <section id="discover" className="bg-background-light dark:bg-background-dark py-16 transition-colors duration-300 border-t border-gray-100 dark:border-gray-800 contain-layout">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 text-center">
         <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-3xl font-display mb-12">Why Izzan?</motion.h2>
         <motion.div 

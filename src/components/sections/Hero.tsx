@@ -42,7 +42,7 @@ export function Hero({ title, subtitle }: { title?: string, subtitle?: string })
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={ref} className="relative w-full min-h-[90vh] flex items-center justify-start overflow-hidden">
+    <section ref={ref} className="relative w-full min-h-[90vh] flex items-center justify-start overflow-hidden contain-layout">
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <video
           autoPlay

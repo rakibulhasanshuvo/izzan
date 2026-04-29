@@ -29,7 +29,7 @@ export function FAQ() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 px-6 md:px-12 max-w-3xl mx-auto scroll-mt-20">
+    <section id="faq" className="py-24 px-6 md:px-12 max-w-3xl mx-auto scroll-mt-20 contain-layout">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-12">
         <motion.h2 variants={fadeIn} className="text-3xl md:text-4xl font-display mb-4 dark:text-gray-100">Frequently Asked Questions</motion.h2>
       </motion.div>

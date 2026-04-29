@@ -54,7 +54,7 @@ export function ShopSection({ bestSellers, newArrivals, saleItems, onExplore }: 
   const displayProducts = activeProducts.slice(0, 12);
 
   return (
-    <section id="shop" className="pt-16 pb-24 transition-colors duration-300">
+    <section id="shop" className="pt-16 pb-24 transition-colors duration-300 contain-layout">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
         {/* Section Header */}
         <motion.div

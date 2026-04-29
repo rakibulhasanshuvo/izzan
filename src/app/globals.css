@@ -74,3 +74,4 @@
 .animate-marquee-reverse {
   animation: marquee-reverse 40s linear infinite;
 }
+.contain-layout { contain: layout; }
