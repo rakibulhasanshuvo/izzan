@@ -21,7 +21,7 @@ export function ProductCard({ item }: { item: Product }) {
   return (
     <div id={`product-${item.id}`} className="flex flex-col group w-full scroll-mt-32">
       {/* Image Container */}
-      <div className="w-full aspect-[4/5] relative overflow-hidden mb-4 rounded-2xl bg-black/[0.03] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.05] transition-all duration-500 group-hover:shadow-xl group-hover:shadow-primary/5">
+      <div className="w-full aspect-[3/4] relative overflow-hidden mb-4 rounded-2xl bg-black/[0.03] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.05] transition-all duration-500 group-hover:shadow-xl group-hover:shadow-primary/5">
         {item.badge && (
           <div className={`absolute top-4 left-4 z-10 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] rounded-full text-white shadow-sm backdrop-blur-md ${item.badge === 'Sale' ? 'bg-red-500/80' : item.badge === 'New' ? 'bg-primary/80' : 'bg-accent-gold/80'}`}>
             {item.badge}
