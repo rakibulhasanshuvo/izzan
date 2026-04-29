@@ -104,12 +104,12 @@ export function CollectionDrawer({ isOpen, onClose, title, products }: Collectio
 
             {/* Scrollable product grid */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto">
-              <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 md:py-14">
+              <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-10 md:py-14">
                 <motion.div
                   initial="hidden"
                   animate="visible"
                   variants={staggerGrid}
-                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-8"
+                  className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 md:gap-8"
                 >
                   {products.map((product) => (
                     <motion.div key={product.id} variants={cardItem}>

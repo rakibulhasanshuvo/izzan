@@ -30,7 +30,7 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="py-24 px-6 md:px-12 bg-white dark:bg-gray-900 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1600px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <motion.div 
             initial="hidden"

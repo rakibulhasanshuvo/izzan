@@ -25,7 +25,7 @@ const steps = [
 
 export function CareGuide() {
   return (
-    <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+    <section className="py-24 px-6 md:px-12 max-w-[1600px] mx-auto">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
         <motion.h2 variants={fadeIn} className="text-3xl md:text-4xl font-display mb-4 dark:text-gray-100">The Perfect Burn</motion.h2>
         <motion.p variants={fadeIn} className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Follow these simple steps to ensure your Izzan candle lasts longer and burns cleaner.</motion.p>

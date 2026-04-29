@@ -51,11 +51,11 @@ export function ShopSection({ bestSellers, newArrivals, saleItems, onExplore }: 
   };
 
   const { products: activeProducts, title: activeTitle } = productMap[activeTab];
-  const displayProducts = activeProducts.slice(0, 8);
+  const displayProducts = activeProducts.slice(0, 12);
 
   return (
     <section id="shop" className="py-28 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-12">
         {/* Section Header */}
         <motion.div
           initial="hidden"
@@ -115,7 +115,7 @@ export function ShopSection({ bestSellers, newArrivals, saleItems, onExplore }: 
             animate="visible"
             exit="exit"
             variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 md:gap-8"
           >
             {displayProducts.map((product) => (
               <motion.div key={product.id} variants={cardVariant}>

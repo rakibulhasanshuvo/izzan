@@ -28,7 +28,7 @@ const testimonials = [
 export function Testimonials() {
   return (
     <section id="reviews" className="bg-secondary-light dark:bg-secondary-dark py-20 transition-colors duration-300">
-      <div className="px-6 md:px-12 max-w-7xl mx-auto text-center">
+      <div className="px-6 md:px-12 max-w-[1600px] mx-auto text-center">
         <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-3xl md:text-4xl font-display mb-12 dark:text-gray-100">Customer Favorites</motion.h2>
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-3 gap-8"

@@ -34,7 +34,7 @@ export function Header({ onViewAllProducts }: HeaderProps) {
         Free Shipping on orders over $50 <ArrowRight size={14} className="ml-2" />
       </div>
       <header className="w-full bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 py-4 px-6 md:px-12 border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
-        <div className="max-w-7xl mx-auto flex justify-between items-center relative z-20">
+        <div className="max-w-[1600px] mx-auto flex justify-between items-center relative z-20">
           <Link href="/" onClick={closeMenu} className="text-3xl md:text-4xl font-logo text-text-light dark:text-text-dark">
             Izzan
           </Link>

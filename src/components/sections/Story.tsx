@@ -22,7 +22,7 @@ const staggerContainer: Variants = {
 
 export function Story({ title, content }: { title?: string, content?: string }) {
   return (
-    <section id="story" className="py-24 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-20">
+    <section id="story" className="py-24 px-6 md:px-12 max-w-[1600px] mx-auto scroll-mt-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center flex-col-reverse md:flex-row">
         <motion.div
           initial="hidden"
