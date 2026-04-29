@@ -4,7 +4,20 @@ import React, { useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CollectionDrawer } from "@/components/CollectionDrawer";
-import { Product } from "@prisma/client";
+import { Product as GeneratedProduct } from "@/generated/client";
+
+// Define local Product type to match what the child components expect
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice: number | null;
+  img: string;
+  hoverImg: string | null;
+  categories: string;
+  badge: string | null;
+};
+
 
 // Sections
 import { Hero } from "@/components/sections/Hero";
@@ -20,16 +33,28 @@ import { Community } from "@/components/sections/Community";
 import { ContactSection } from "@/components/sections/ContactSection";
 
 interface HomeClientProps {
-  products: Product[];
+  products: GeneratedProduct[];
   cms: Record<string, string>;
 }
 
 export default function HomeClient({ products, cms }: HomeClientProps) {
   const [drawerContent, setDrawerContent] = useState<{ title: string; products: Product[] } | null>(null);
 
-  const bestSellers = products.filter(p => p.categories.includes("Best Sellers"));
-  const newArrivals = products.filter(p => p.categories.includes("New Arrivals"));
-  const saleItems = products.filter(p => p.categories.includes("Sale"));
+  // Transform to local Product type to remove description, stock, createdAt, updatedAt
+  const localProducts: Product[] = products.map(p => ({
+    id: p.id,
+    name: p.name,
+    price: p.price,
+    originalPrice: p.originalPrice,
+    img: p.img,
+    hoverImg: p.hoverImg,
+    categories: p.categories,
+    badge: p.badge,
+  }));
+
+  const bestSellers = localProducts.filter(p => p.categories.includes("Best Sellers"));
+  const newArrivals = localProducts.filter(p => p.categories.includes("New Arrivals"));
+  const saleItems = localProducts.filter(p => p.categories.includes("Sale"));
 
   const handleExplore = (title: string, products: Product[]) => {
     setDrawerContent({ title, products });
@@ -37,7 +62,7 @@ export default function HomeClient({ products, cms }: HomeClientProps) {
 
   return (
     <>
-      <Header onViewAllProducts={() => handleExplore("Full Collection", products)} />
+      <Header onViewAllProducts={() => handleExplore("Full Collection", localProducts)} />
       <main className="flex-1">
         <Hero title={cms.hero_title} subtitle={cms.hero_subtitle} />
         <Pillars />

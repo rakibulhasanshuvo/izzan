@@ -5,11 +5,11 @@ type Product = {
   id: string;
   name: string;
   price: number;
-  originalPrice?: number | null;
+  originalPrice: number | null;
   img: string;
-  hoverImg?: string | null;
+  hoverImg: string | null;
   categories?: string | string[];
-  badge?: string | null;
+  badge: string | null;
 };
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";

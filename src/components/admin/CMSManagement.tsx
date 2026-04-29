@@ -61,8 +61,9 @@ export default function CMSManagement({ initialSections }: CMSManagementProps) {
             {items.map((item) => (
               <div key={item.id} className="group relative">
                 <div className="flex justify-between items-start mb-2">
-                  <label className="text-[12px] font-semibold text-zinc-700 uppercase tracking-widest">{item.key.replace(/_/g, " ")}</label>
+                  <label htmlFor={item.key} className="text-[12px] font-semibold text-zinc-700 uppercase tracking-widest">{item.key.replace(/_/g, " ")}</label>
                   <button
+                    aria-label={`Save ${item.key}`}
                     onClick={() => handleSave(item)}
                     disabled={isSaving === item.id}
                     className="text-[12px] font-medium text-primary hover:text-primary-dark disabled:opacity-50 transition-colors flex items-center gap-1"
@@ -77,6 +78,8 @@ export default function CMSManagement({ initialSections }: CMSManagementProps) {
                 </div>
                 {item.value.length > 100 ? (
                   <textarea
+                    id={item.key}
+                    aria-label={item.key}
                     value={item.value}
                     onChange={(e) => handleValueChange(sectionName, item.key, e.target.value)}
                     rows={4}
@@ -84,6 +87,8 @@ export default function CMSManagement({ initialSections }: CMSManagementProps) {
                   />
                 ) : (
                   <input
+                    id={item.key}
+                    aria-label={item.key}
                     type="text"
                     value={item.value}
                     onChange={(e) => handleValueChange(sectionName, item.key, e.target.value)}

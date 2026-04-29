@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withAuth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
-export async function PATCH(req: NextRequest) {
+export const PATCH = withAuth(async function PATCH(req: NextRequest) {
   try {
     const data = await req.json();
     
@@ -41,4 +42,4 @@ export async function PATCH(req: NextRequest) {
     console.error(error);
     return NextResponse.json({ error: "Failed to update settings" }, { status: 500 });
   }
-}
+});

@@ -114,7 +114,7 @@ export default function CustomersTableClient({ initialCustomers }: { initialCust
                     <td className="py-4 px-6 text-right font-medium text-zinc-900">${customer.totalSpend.toFixed(2)}</td>
                     <td className="py-4 px-6 text-zinc-500">{joinDate}</td>
                     <td className="py-4 px-6 text-right">
-                      <button className="text-zinc-400 hover:text-zinc-900 transition-colors opacity-0 group-hover:opacity-100">
+                      <button aria-label="Customer actions" className="text-zinc-400 hover:text-zinc-900 transition-colors opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-full">
                         <span className="material-symbols-outlined text-[20px]">more_vert</span>
                       </button>
                     </td>
@@ -133,10 +133,10 @@ export default function CustomersTableClient({ initialCustomers }: { initialCust
         <div className="px-6 py-4 flex items-center justify-between border-t border-zinc-100 bg-white/50">
           <span className="text-[13px] text-zinc-500 font-medium">Showing {customers.length} entries</span>
           <div className="flex gap-2">
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 hover:text-zinc-900 hover:border-zinc-300 transition-colors disabled:opacity-50" disabled>
+            <button aria-label="Previous page" className="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 hover:text-zinc-900 hover:border-zinc-300 transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" disabled>
               <span className="material-symbols-outlined text-[18px]">chevron_left</span>
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 hover:text-zinc-900 hover:border-zinc-300 transition-colors disabled:opacity-50" disabled>
+            <button aria-label="Next page" className="w-8 h-8 flex items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 hover:text-zinc-900 hover:border-zinc-300 transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" disabled>
               <span className="material-symbols-outlined text-[18px]">chevron_right</span>
             </button>
           </div>

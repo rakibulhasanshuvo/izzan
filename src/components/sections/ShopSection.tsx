@@ -5,7 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
   price: number;

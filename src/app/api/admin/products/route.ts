@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withAuth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
-export async function GET() {
+export const GET = withAuth(async function GET(req: NextRequest) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _url = req.url;
   try {
     const products = await prisma.product.findMany({
       orderBy: { updatedAt: "desc" },
@@ -11,11 +14,14 @@ export async function GET() {
     console.error(error);
     return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 });
   }
-}
+});
 
-export async function POST(req: NextRequest) {
+export const POST = withAuth(async function POST(req: NextRequest) {
   try {
     const data = await req.json();
+    if (!data.name || !data.price || data.stock === undefined) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
     const product = await prisma.product.create({
       data: {
         name: data.name,
@@ -34,13 +40,16 @@ export async function POST(req: NextRequest) {
     console.error(error);
     return NextResponse.json({ error: "Failed to create product" }, { status: 500 });
   }
-}
+});
 
-export async function PATCH(req: NextRequest) {
+export const PATCH = withAuth(async function PATCH(req: NextRequest) {
   try {
     const data = await req.json();
     const { id, ...updateData } = data;
     
+    if (!id) {
+      return NextResponse.json({ error: "Missing product ID" }, { status: 400 });
+    }
     const product = await prisma.product.update({
       where: { id },
       data: {
@@ -60,9 +69,9 @@ export async function PATCH(req: NextRequest) {
     console.error(error);
     return NextResponse.json({ error: "Failed to update product" }, { status: 500 });
   }
-}
+});
 
-export async function DELETE(req: NextRequest) {
+export const DELETE = withAuth(async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
@@ -77,4 +86,4 @@ export async function DELETE(req: NextRequest) {
     console.error(error);
     return NextResponse.json({ error: "Failed to delete product" }, { status: 500 });
   }
-}
+});

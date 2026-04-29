@@ -18,7 +18,7 @@ export default function SideNavBar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed left-0 top-0 h-full flex flex-col py-8 w-[260px] border-r border-zinc-800/10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] bg-white/80 backdrop-blur-2xl z-50">
+    <nav aria-label="Sidebar Navigation" className="fixed left-0 top-0 h-full flex flex-col py-8 w-[260px] border-r border-zinc-800/10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] bg-white/80 backdrop-blur-2xl z-50">
       <div className="px-8 mb-xl">
         <div className="flex items-center gap-4 mb-2">
           <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-serif italic font-bold shadow-lg shadow-primary/20">
@@ -36,6 +36,7 @@ export default function SideNavBar() {
           return (
             <li key={item.name} className={item.mt === "auto" ? "mt-auto pt-6 border-t border-zinc-100" : ""}>
               <Link
+                aria-current={isActive ? "page" : undefined}
                 href={item.href}
                 className={cn(
                   "flex items-center px-4 py-3 rounded-2xl font-serif font-medium tracking-wide transition-all duration-300 group",
@@ -44,7 +45,7 @@ export default function SideNavBar() {
                     : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 border border-transparent"
                 )}
               >
-                <span className={cn(
+                <span aria-hidden="true" className={cn(
                   "material-symbols-outlined mr-4 transition-transform duration-300", 
                   !isActive && "group-hover:scale-110",
                   isActive && "text-primary"

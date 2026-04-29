@@ -76,21 +76,21 @@ export default function SettingsFormClient({ initialSettings }: { initialSetting
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">First Name</label>
-              <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all" />
+              <label htmlFor="firstName" className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">First Name</label>
+              <input id="firstName" name="firstName" aria-label="First Name" type="text" value={firstName} onChange={e => setFirstName(e.target.value)} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all" />
             </div>
             <div className="space-y-2">
-              <label className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">Last Name</label>
-              <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all" />
+              <label htmlFor="lastName" className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">Last Name</label>
+              <input id="lastName" name="lastName" aria-label="Last Name" type="text" value={lastName} onChange={e => setLastName(e.target.value)} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all" />
             </div>
           </div>
           <div className="space-y-2">
-            <label className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">Email Address</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all" />
+            <label htmlFor="email" className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">Email Address</label>
+            <input id="email" name="email" aria-label="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all" />
           </div>
           <div className="space-y-2">
-            <label className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">Bio</label>
-            <textarea value={bio} onChange={e => setBio(e.target.value)} rows={4} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all resize-none" />
+            <label htmlFor="bio" className="text-[13px] font-medium text-zinc-700 uppercase tracking-widest pl-1">Bio</label>
+            <textarea id="bio" name="bio" aria-label="Bio" value={bio} onChange={e => setBio(e.target.value)} rows={4} className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-2xl px-4 py-3.5 text-[15px] text-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all resize-none" />
           </div>
         </div>
       </section>

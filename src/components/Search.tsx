@@ -26,7 +26,7 @@ export function Search({ onViewAll }: SearchProps) {
 
     const filtered = products.filter((p) =>
       p.name.toLowerCase().includes(query.toLowerCase()) ||
-      p.categories.some(c => c.toLowerCase().includes(query.toLowerCase()))
+      p.categories.toLowerCase().includes(query.toLowerCase())
     );
     setResults(filtered.slice(0, 5));
   }, [query]);

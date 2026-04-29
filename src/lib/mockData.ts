@@ -2,11 +2,11 @@ export type Product = {
   id: string;
   name: string;
   price: number;
-  originalPrice?: number;
+  originalPrice: number | null;
   img: string;
-  hoverImg?: string;
-  categories: string[];
-  badge?: "Sale" | "New" | "Best Seller";
+  hoverImg: string | null;
+  categories: string;
+  badge: string | null;
 };
 
 // We reuse the 4 high-quality premium images provided in the original prototype to fill out the 24 items.
@@ -18,28 +18,52 @@ const IMAGES = [
 ];
 
 export const products: Product[] = [
-  { id: "1", name: "Lavender Drift Candle", price: 28, img: IMAGES[0], hoverImg: IMAGES[1], categories: ["Best Sellers"], badge: "Best Seller" },
-  { id: "2", name: "Eucalyptus Essential Oil", price: 35, img: IMAGES[1], hoverImg: IMAGES[2], categories: ["Best Sellers", "New Arrivals"], badge: "New" },
-  { id: "3", name: "Amber Bloom Candle", price: 28, img: IMAGES[2], hoverImg: IMAGES[3], categories: ["Best Sellers"] },
-  { id: "4", name: "Sandalwood Mist Diffuser", price: 38, originalPrice: 45, img: IMAGES[3], hoverImg: IMAGES[0], categories: ["Sale"], badge: "Sale" },
-  { id: "5", name: "Vanilla Bean & Oak", price: 30, img: IMAGES[0], hoverImg: IMAGES[1], categories: ["New Arrivals"], badge: "New" },
-  { id: "6", name: "Citrus Grove Oil", price: 25, originalPrice: 32, img: IMAGES[1], hoverImg: IMAGES[2], categories: ["Sale"], badge: "Sale" },
-  { id: "7", name: "Midnight Jasmine", price: 28, img: IMAGES[2], hoverImg: IMAGES[3], categories: ["Best Sellers"] },
-  { id: "8", name: "Rosemary Mint Candle", price: 26, img: IMAGES[3], hoverImg: IMAGES[0], categories: ["New Arrivals"] },
-  { id: "9", name: "Bergamot & Clove", price: 32, img: IMAGES[0], hoverImg: IMAGES[1], categories: ["Best Sellers", "New Arrivals"] },
-  { id: "10", name: "Peppermint Oil", price: 22, originalPrice: 28, img: IMAGES[1], hoverImg: IMAGES[2], categories: ["Sale"], badge: "Sale" },
-  { id: "11", name: "Wild Fig & Cedar", price: 30, img: IMAGES[2], hoverImg: IMAGES[3], categories: ["Best Sellers"] },
-  { id: "12", name: "White Tea Diffuser", price: 40, img: IMAGES[3], hoverImg: IMAGES[0], categories: ["New Arrivals"], badge: "New" },
-  { id: "13", name: "Ocean Breeze Candle", price: 26, img: IMAGES[0], hoverImg: IMAGES[1], categories: ["Sale"], originalPrice: 34, badge: "Sale" },
-  { id: "14", name: "Lemongrass Oil", price: 24, img: IMAGES[1], hoverImg: IMAGES[2], categories: ["Best Sellers"] },
-  { id: "15", name: "Patchouli Noir", price: 29, img: IMAGES[2], hoverImg: IMAGES[3], categories: ["New Arrivals"], badge: "New" },
-  { id: "16", name: "Sage & Sweetgrass", price: 27, img: IMAGES[3], hoverImg: IMAGES[0], categories: ["Best Sellers"] },
-  { id: "17", name: "Warm Cinnamon", price: 25, img: IMAGES[0], hoverImg: IMAGES[1], categories: ["Sale"], originalPrice: 30, badge: "Sale" },
-  { id: "18", name: "Tea Tree Oil", price: 21, img: IMAGES[1], hoverImg: IMAGES[2], categories: ["New Arrivals"] },
-  { id: "19", name: "Golden Amber", price: 31, img: IMAGES[2], hoverImg: IMAGES[3], categories: ["Best Sellers"] },
-  { id: "20", name: "Forest Pine Candle", price: 28, img: IMAGES[3], hoverImg: IMAGES[0], categories: ["Best Sellers", "Sale"], originalPrice: 35, badge: "Sale" },
-  { id: "21", name: "Himalayan Salt Diffuser", price: 45, img: IMAGES[0], hoverImg: IMAGES[1], categories: ["New Arrivals"], badge: "New" },
-  { id: "22", name: "Frankincense Oil", price: 38, img: IMAGES[1], hoverImg: IMAGES[2], categories: ["Best Sellers"] },
-  { id: "23", name: "Neroli Blossom", price: 34, img: IMAGES[2], hoverImg: IMAGES[3], categories: ["Sale"], originalPrice: 42, badge: "Sale" },
-  { id: "24", name: "Izzan Signature Collection", price: 85, img: IMAGES[3], hoverImg: IMAGES[0], categories: ["Best Sellers", "New Arrivals"], badge: "Best Seller" },
+  { id: "1", name: "Lavender Drift Candle", price: 28,
+    originalPrice: null, img: IMAGES[0], hoverImg: IMAGES[1], categories: "Best Sellers", badge: "Best Seller" },
+  { id: "2", name: "Eucalyptus Essential Oil", price: 35,
+    originalPrice: null, img: IMAGES[1], hoverImg: IMAGES[2], categories: "Best Sellers, New Arrivals", badge: "New" },
+  { id: "3", name: "Amber Bloom Candle", price: 28,
+    originalPrice: null, img: IMAGES[2], hoverImg: IMAGES[3], categories: "Best Sellers", badge: null },
+  { id: "4", name: "Sandalwood Mist Diffuser", price: 38,
+    originalPrice: 45, img: IMAGES[3], hoverImg: IMAGES[0], categories: "Sale", badge: "Sale" },
+  { id: "5", name: "Vanilla Bean & Oak", price: 30,
+    originalPrice: null, img: IMAGES[0], hoverImg: IMAGES[1], categories: "New Arrivals", badge: "New" },
+  { id: "6", name: "Citrus Grove Oil", price: 25,
+    originalPrice: 32, img: IMAGES[1], hoverImg: IMAGES[2], categories: "Sale", badge: "Sale" },
+  { id: "7", name: "Midnight Jasmine", price: 28,
+    originalPrice: null, img: IMAGES[2], hoverImg: IMAGES[3], categories: "Best Sellers", badge: null },
+  { id: "8", name: "Rosemary Mint Candle", price: 26,
+    originalPrice: null, img: IMAGES[3], hoverImg: IMAGES[0], categories: "New Arrivals", badge: null },
+  { id: "9", name: "Bergamot & Clove", price: 32,
+    originalPrice: null, img: IMAGES[0], hoverImg: IMAGES[1], categories: "Best Sellers, New Arrivals", badge: null },
+  { id: "10", name: "Peppermint Oil", price: 22,
+    originalPrice: 28, img: IMAGES[1], hoverImg: IMAGES[2], categories: "Sale", badge: "Sale" },
+  { id: "11", name: "Wild Fig & Cedar", price: 30,
+    originalPrice: null, img: IMAGES[2], hoverImg: IMAGES[3], categories: "Best Sellers", badge: null },
+  { id: "12", name: "White Tea Diffuser", price: 40,
+    originalPrice: null, img: IMAGES[3], hoverImg: IMAGES[0], categories: "New Arrivals", badge: "New" },
+  { id: "13", name: "Ocean Breeze Candle", price: 26,
+    img: IMAGES[0], hoverImg: IMAGES[1], categories: "Sale", originalPrice: 34, badge: "Sale" },
+  { id: "14", name: "Lemongrass Oil", price: 24,
+    originalPrice: null, img: IMAGES[1], hoverImg: IMAGES[2], categories: "Best Sellers", badge: null },
+  { id: "15", name: "Patchouli Noir", price: 29,
+    originalPrice: null, img: IMAGES[2], hoverImg: IMAGES[3], categories: "New Arrivals", badge: "New" },
+  { id: "16", name: "Sage & Sweetgrass", price: 27,
+    originalPrice: null, img: IMAGES[3], hoverImg: IMAGES[0], categories: "Best Sellers", badge: null },
+  { id: "17", name: "Warm Cinnamon", price: 25,
+    img: IMAGES[0], hoverImg: IMAGES[1], categories: "Sale", originalPrice: 30, badge: "Sale" },
+  { id: "18", name: "Tea Tree Oil", price: 21,
+    originalPrice: null, img: IMAGES[1], hoverImg: IMAGES[2], categories: "New Arrivals", badge: null },
+  { id: "19", name: "Golden Amber", price: 31,
+    originalPrice: null, img: IMAGES[2], hoverImg: IMAGES[3], categories: "Best Sellers", badge: null },
+  { id: "20", name: "Forest Pine Candle", price: 28,
+    img: IMAGES[3], hoverImg: IMAGES[0], categories: "Best Sellers, Sale", originalPrice: 35, badge: "Sale" },
+  { id: "21", name: "Himalayan Salt Diffuser", price: 45,
+    originalPrice: null, img: IMAGES[0], hoverImg: IMAGES[1], categories: "New Arrivals", badge: "New" },
+  { id: "22", name: "Frankincense Oil", price: 38,
+    originalPrice: null, img: IMAGES[1], hoverImg: IMAGES[2], categories: "Best Sellers", badge: null },
+  { id: "23", name: "Neroli Blossom", price: 34,
+    img: IMAGES[2], hoverImg: IMAGES[3], categories: "Sale", originalPrice: 42, badge: "Sale" },
+  { id: "24", name: "Izzan Signature Collection", price: 85,
+    originalPrice: null, img: IMAGES[3], hoverImg: IMAGES[0], categories: "Best Sellers, New Arrivals", badge: "Best Seller" },
 ];
