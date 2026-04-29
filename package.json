@@ -17,7 +17,8 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
-    "next": "16.2.4",
+    "material-symbols": "^0.44.4",
+    "next": "^16.2.4",
     "next-themes": "^0.4.6",
     "prisma": "^7.8.0",
     "react": "19.2.4",
@@ -39,5 +40,10 @@
   },
   "prisma": {
     "seed": "node prisma/seed.mjs"
-  }
+  },
+  "browserslist": [
+    ">0.3%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
