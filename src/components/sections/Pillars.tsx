@@ -38,14 +38,14 @@ const pillars = [
 
 export function Pillars() {
   return (
-    <section className="py-32 px-6 md:px-12 max-w-[1600px] mx-auto">
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
+    <section className="pt-32 pb-16 px-6 md:px-12 max-w-[1600px] mx-auto">
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-12">
         <motion.span variants={fadeIn} className="text-primary font-bold tracking-[0.3em] uppercase text-[10px] mb-4 block">Our Values</motion.span>
-        <motion.h2 variants={fadeIn} className="text-4xl md:text-5xl font-display mb-6 dark:text-gray-100">The Izzan Promise</motion.h2>
+        <motion.h2 variants={fadeIn} className="text-4xl md:text-5xl font-display mb-4 dark:text-gray-100">The Izzan Promise</motion.h2>
         <motion.p variants={fadeIn} className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">Crafted with intention. We never compromise on quality or your well-being, ensuring every scent is a sanctuary.</motion.p>
       </motion.div>
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-3 gap-10"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}

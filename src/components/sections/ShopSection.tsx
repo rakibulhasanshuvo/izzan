@@ -54,7 +54,7 @@ export function ShopSection({ bestSellers, newArrivals, saleItems, onExplore }: 
   const displayProducts = activeProducts.slice(0, 12);
 
   return (
-    <section id="shop" className="py-28 transition-colors duration-300">
+    <section id="shop" className="pt-16 pb-24 transition-colors duration-300">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12">
         {/* Section Header */}
         <motion.div
@@ -62,7 +62,7 @@ export function ShopSection({ bestSellers, newArrivals, saleItems, onExplore }: 
           whileInView="visible"
           viewport={{ once: true }}
           variants={staggerContainer}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <motion.span variants={fadeIn} className="text-[#607c64] font-bold tracking-[0.3em] uppercase text-[10px] mb-4 block">
             Curated for You
@@ -81,7 +81,7 @@ export function ShopSection({ bestSellers, newArrivals, saleItems, onExplore }: 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex justify-center mb-14"
+          className="flex justify-center mb-10"
         >
           <div className="inline-flex items-center bg-black/[0.04] dark:bg-white/[0.06] rounded-full p-1.5">
             {tabs.map((tab) => (
@@ -131,7 +131,7 @@ export function ShopSection({ bestSellers, newArrivals, saleItems, onExplore }: 
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="flex justify-center mt-16"
+          className="flex justify-center mt-12"
         >
           <button
             onClick={() => onExplore(activeTitle, activeProducts)}
