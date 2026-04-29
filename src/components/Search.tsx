@@ -1,0 +1,146 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { Search as SearchIcon, X, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { products } from "@/lib/mockData";
+import { Product } from "@/generated/client";
+import Image from "next/image";
+import Link from "next/link";
+
+interface SearchProps {
+  onViewAll?: () => void;
+}
+
+export function Search({ onViewAll }: SearchProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<Product[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (query.trim() === "") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setResults([]);
+      return;
+    }
+
+    const filtered = products.filter((p) =>
+      p.name.toLowerCase().includes(query.toLowerCase()) ||
+      p.categories.toLowerCase().includes(query.toLowerCase())
+    );
+    setResults(filtered.slice(0, 5) as unknown as Product[]);
+  }, [query]);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  const toggleSearch = () => setIsOpen(!isOpen);
+
+  return (
+    <>
+      <button 
+        onClick={toggleSearch}
+        className="text-text-light dark:text-text-dark hover:text-primary transition-colors"
+        aria-label="Search Products"
+      >
+        <SearchIcon size={20} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 px-4 md:px-0">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={toggleSearch}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: -20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: -20 }}
+              className="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800"
+            >
+              <div className="p-6 flex items-center space-x-4 border-b border-gray-100 dark:border-gray-800">
+                <SearchIcon className="text-gray-400" size={24} />
+                <input 
+                  ref={inputRef}
+                  type="text" 
+                  placeholder="Search for candles, oils, scents..." 
+                  className="flex-1 bg-transparent border-none focus:outline-none text-lg dark:text-gray-100 placeholder-gray-400"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                <button onClick={toggleSearch} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="max-h-[60vh] overflow-y-auto p-4">
+                {query.trim() === "" ? (
+                  <div className="py-12 text-center text-gray-500">
+                    <p className="text-sm uppercase tracking-widest font-semibold mb-4">Trending Scents</p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {["Lavender", "Eucalyptus", "Sandalwood", "Amber"].map(s => (
+                        <button 
+                          key={s} 
+                          onClick={() => setQuery(s)}
+                          className="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-xs font-medium hover:bg-primary hover:text-white transition-colors"
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : results.length > 0 ? (
+                  <div className="space-y-2">
+                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 px-2 mb-4">Search Results</p>
+                    {results.map((product) => (
+                      <Link 
+                        key={product.id} 
+                        href={`#product-${product.id}`}
+                        onClick={toggleSearch}
+                        className="flex items-center p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
+                      >
+                        <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-800">
+                          <Image src={product.img} alt={product.name} fill className="object-cover" />
+                        </div>
+                        <div className="ml-4 flex-1">
+                          <h4 className="font-semibold text-sm dark:text-gray-100 group-hover:text-primary transition-colors">{product.name}</h4>
+                          <p className="text-xs text-gray-500 mt-1">${product.price}</p>
+                        </div>
+                        <ArrowRight size={16} className="text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="py-12 text-center text-gray-500">
+                    <p>No results found for &quot;{query}&quot;</p>
+                  </div>
+                )}
+              </div>
+              
+              <div className="bg-gray-50 dark:bg-gray-800/50 p-4 text-center">
+                <button 
+                  onClick={() => {
+                    onViewAll?.();
+                    setIsOpen(false);
+                  }}
+                  className="text-xs font-bold uppercase tracking-widest text-primary hover:underline cursor-pointer"
+                >
+                  View All Products
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
