@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
 
 /**
  * Basic authentication check for admin routes.
- * In a real-world scenario, you would integrate NextAuth or verify JWT tokens here.
  */
-export function checkAdminAuth(req: NextRequest): boolean {
-  // We consume req to prevent lint errors, or just suppress it:
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const url = req.url; // mock usage
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function checkAdminAuth(req: NextRequest): Promise<boolean> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.getUser();
 
-  // Example check (disabled for demonstration purposes, returns true to not break the app)
-  // const authHeader = req.headers.get("authorization");
-  // if (!authHeader || !authHeader.startsWith("Bearer ")) {
-  //   return false;
-  // }
+  if (error || !data.user) {
+    return false;
+  }
 
   return true;
 }
@@ -21,9 +19,12 @@ export function checkAdminAuth(req: NextRequest): boolean {
 /**
  * Higher-order function to wrap API route handlers with authentication check.
  */
-export function withAuth(handler: (req: NextRequest, ...args: unknown[]) => Promise<NextResponse> | NextResponse) {
-  return async (req: NextRequest, ...args: unknown[]) => {
-    if (!checkAdminAuth(req)) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function withAuth(handler: (req: NextRequest, ...args: any[]) => Promise<NextResponse> | NextResponse) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return async (req: NextRequest, ...args: any[]) => {
+    const isAuthenticated = await checkAdminAuth(req);
+    if (!isAuthenticated) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     return handler(req, ...args);
