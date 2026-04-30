@@ -1,22 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { apiHandler } from "@/lib/api";
 
-export const PATCH = withAuth(async function PATCH(req: NextRequest) {
-  try {
-    const { id, value } = await req.json();
-    
-    if (!id || value === undefined) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-    const content = await prisma.cMSContent.update({
-      where: { id },
-      data: { value },
-    });
-    
-    return NextResponse.json(content);
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Failed to update CMS content" }, { status: 500 });
+export const PATCH = withAuth(apiHandler(async function PATCH(req: NextRequest) {
+  const { id, value } = await req.json();
+
+  if (!id || value === undefined) {
+    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
-});
+  const content = await prisma.cMSContent.update({
+    where: { id },
+    data: { value },
+  });
+
+  return NextResponse.json(content);
+}, "Failed to update CMS content"));

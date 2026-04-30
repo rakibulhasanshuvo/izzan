@@ -9,11 +9,11 @@ export function checkAdminAuth(req: NextRequest): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const url = req.url; // mock usage
 
-  // Example check (disabled for demonstration purposes, returns true to not break the app)
-  // const authHeader = req.headers.get("authorization");
-  // if (!authHeader || !authHeader.startsWith("Bearer ")) {
-  //   return false;
-  // }
+  // Basic check to ensure a token is present
+  const authHeader = req.headers.get("authorization");
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return false;
+  }
 
   return true;
 }
