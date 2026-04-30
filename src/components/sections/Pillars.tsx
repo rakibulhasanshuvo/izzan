@@ -38,7 +38,7 @@ const pillars = [
 
 export function Pillars() {
   return (
-    <section className="pt-32 pb-16 px-6 md:px-12 max-w-[1600px] mx-auto">
+    <section className="pt-32 pb-16 px-6 md:px-12 max-w-[1600px] mx-auto contain-layout">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-12">
         <motion.span variants={fadeIn} className="text-primary font-bold tracking-[0.3em] uppercase text-[10px] mb-4 block">Our Values</motion.span>
         <motion.h2 variants={fadeIn} className="text-4xl md:text-5xl font-display mb-4 dark:text-gray-100">The Izzan Promise</motion.h2>

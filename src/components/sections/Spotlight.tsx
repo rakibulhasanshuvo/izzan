@@ -36,7 +36,7 @@ export function Spotlight() {
   };
 
   return (
-    <section className="bg-secondary-light dark:bg-secondary-dark py-24 transition-colors duration-300 relative overflow-hidden">
+    <section className="bg-secondary-light dark:bg-secondary-dark py-24 transition-colors duration-300 relative overflow-hidden contain-layout">
       {/* Decorative background element */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 

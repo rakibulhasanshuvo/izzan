@@ -29,7 +29,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 md:px-12 bg-white dark:bg-gray-900 transition-colors duration-300">
+    <section id="contact" className="py-24 px-6 md:px-12 bg-white dark:bg-gray-900 transition-colors duration-300 contain-layout">
       <div className="max-w-[1600px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <motion.div 
