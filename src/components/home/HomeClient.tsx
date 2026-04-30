@@ -5,19 +5,22 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CollectionDrawer } from "@/components/CollectionDrawer";
 import { Product } from "@/generated/client";
+import dynamic from "next/dynamic";
 
-// Sections
+// Above the fold
 import { Hero } from "@/components/sections/Hero";
-import { Pillars } from "@/components/sections/Pillars";
-import { ShopSection } from "@/components/sections/ShopSection";
-import { Spotlight } from "@/components/sections/Spotlight";
-import { Story } from "@/components/sections/Story";
-import { Features } from "@/components/sections/Features";
-import { CareGuide } from "@/components/sections/CareGuide";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { FAQ } from "@/components/sections/FAQ";
-import { Community } from "@/components/sections/Community";
-import { ContactSection } from "@/components/sections/ContactSection";
+
+// Dynamic Below the fold
+const Pillars = dynamic(() => import("@/components/sections/Pillars").then((mod) => mod.Pillars));
+const ShopSection = dynamic(() => import("@/components/sections/ShopSection").then((mod) => mod.ShopSection));
+const Spotlight = dynamic(() => import("@/components/sections/Spotlight").then((mod) => mod.Spotlight));
+const Story = dynamic(() => import("@/components/sections/Story").then((mod) => mod.Story));
+const Features = dynamic(() => import("@/components/sections/Features").then((mod) => mod.Features));
+const CareGuide = dynamic(() => import("@/components/sections/CareGuide").then((mod) => mod.CareGuide));
+const Testimonials = dynamic(() => import("@/components/sections/Testimonials").then((mod) => mod.Testimonials));
+const FAQ = dynamic(() => import("@/components/sections/FAQ").then((mod) => mod.FAQ));
+const Community = dynamic(() => import("@/components/sections/Community").then((mod) => mod.Community));
+const ContactSection = dynamic(() => import("@/components/sections/ContactSection").then((mod) => mod.ContactSection));
 
 interface HomeClientProps {
   products: Product[];
