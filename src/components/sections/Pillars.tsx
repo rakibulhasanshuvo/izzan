@@ -55,7 +55,7 @@ export function Pillars() {
           <motion.div key={idx} variants={fadeIn} className="relative aspect-[4/5] overflow-hidden rounded-3xl group cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500">
             <Image 
               src={pillar.img} 
-              alt={pillar.title} 
+              alt=""
               fill 
               className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" 
             />

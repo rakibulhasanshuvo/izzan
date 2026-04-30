@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { CartDrawer } from "./CartDrawer";
 import { Search } from "./Search";
+import FocusTrap from "focus-trap-react";
 
 interface HeaderProps {
   onViewAllProducts?: () => void;
@@ -84,19 +85,24 @@ export function Header({ onViewAllProducts }: HeaderProps) {
 
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="md:hidden absolute top-full left-0 right-0 bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 overflow-hidden shadow-lg z-10"
-            >
+            <FocusTrap focusTrapOptions={{ fallbackFocus: "body", escapeDeactivates: false }}>
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="md:hidden absolute top-full left-0 right-0 bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 overflow-hidden shadow-lg z-10"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile Menu"
+              >
               <nav className="flex flex-col px-6 py-4 space-y-6">
                 <Link href="/#shop" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Shop</Link>
                 <Link href="/#story" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Story</Link>
                 <Link href="/#discover" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Discover</Link>
                 <Link href="/#reviews" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Reviews</Link>
               </nav>
-            </motion.div>
+              </motion.div>
+            </FocusTrap>
           )}
         </AnimatePresence>
       </header>
