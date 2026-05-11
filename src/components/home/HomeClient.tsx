@@ -4,7 +4,7 @@ import React, { useState, useMemo, useCallback } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CollectionDrawer } from "@/components/CollectionDrawer";
-import { Product } from "@/generated/client";
+import { Product } from "@/types";
 
 // Sections
 import { Hero } from "@/components/sections/Hero";

@@ -4,16 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma db push --accept-data-loss && prisma db seed && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate",
-    "db:push": "prisma db push"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.8.0",
-    "@prisma/client": "^7.8.0",
-    "better-sqlite3": "^12.9.0",
+    "@t3-oss/env-nextjs": "^0.13.11",
     "clsx": "^2.1.1",
     "dotenv": "^17.4.2",
     "focus-trap-react": "^12.0.1",
@@ -22,16 +18,16 @@
     "material-symbols": "^0.44.4",
     "next": "^16.2.4",
     "next-themes": "^0.4.6",
-    "prisma": "^7.8.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.4.3",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -39,9 +35,6 @@
     "eslint-config-next": "^16.2.4",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "prisma": {
-    "seed": "node prisma/seed.mjs"
   },
   "browserslist": [
     ">0.3%",

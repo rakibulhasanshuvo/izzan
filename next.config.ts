@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+import "./src/env.ts";
 
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -14,4 +15,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-

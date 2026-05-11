@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Search as SearchIcon, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/lib/mockData";
-import { Product } from "@/generated/client";
+import { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 

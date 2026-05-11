@@ -5,7 +5,7 @@ import { motion, Variants } from "framer-motion";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
 import { products } from "@/lib/mockData";
-import { Product } from "@/generated/client";
+import { Product } from "@/types";
 
 const fadeIn: Variants = {
   hidden: { opacity: 0, y: 20 },

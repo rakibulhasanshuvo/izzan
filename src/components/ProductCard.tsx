@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Product } from "@/generated/client";
+import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 import { Check } from "lucide-react";

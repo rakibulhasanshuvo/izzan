@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/generated/client";
+import { Product } from "@/types";
 import { ProductCard } from "./ProductCard";
 
 interface InfiniteMarqueeProps {

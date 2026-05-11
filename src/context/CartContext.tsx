@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react";
-import { Product } from "@/generated/client";
+import { Product } from "@/types";
 
 export type CartItem = Product & { quantity: number };
 
