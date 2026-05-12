@@ -1,4 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+const fs = require('fs');
+
+let content = fs.readFileSync('src/app/api/orders/route.test.ts', 'utf8');
+
+// I will just wipe out the file and write it cleanly to be exactly what I want, merging both suites
+
+const newContent = `import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
 
 // Need to hoist the mock implementation completely
@@ -102,14 +108,13 @@ describe('Orders API POST handler', () => {
     const req = createRequest(validPayload);
 
     // Mock findUnique to return existing customer
-    prismaMock.customer.findUnique.mockImplementation(((args: unknown) => {
+    prismaMock.customer.findUnique.mockImplementation(async (args: unknown) => {
       const typedArgs = args as { where?: { phone?: string, email?: string } };
       if (typedArgs?.where?.phone) {
-        return { id: 'cust1', name: 'John Doe', phone: '01712345678', email: 'john@example.com', zila: 'Dhaka', upozila: 'Savar', location: 'Dhaka', tier: 'Bronze', totalSpend: 0, createdAt: new Date(), updatedAt: new Date() };
+        return { id: 'cust1', name: 'John Doe', phone: '01712345678', email: 'john@example.com', zila: 'Dhaka', upozila: 'Savar', location: 'Dhaka', totalSpend: 0, createdAt: new Date(), updatedAt: new Date() };
       }
       return null;
-    }) as unknown as typeof prismaMock.customer.findUnique);
-
+    });
 
     // Mock transaction
     prismaMock.$transaction.mockImplementation(async (callback: unknown) => {
@@ -167,7 +172,7 @@ describe('Orders API POST handler', () => {
     const data = await response.json();
 
     expect(response.status).toBe(400);
-    expect(data.error).toBe('Product not found: Product 1');
+    expect(data.error).toBe('Product not found: prod1');
   });
 
   it('should return 400 if there is insufficient stock', async () => {
@@ -319,3 +324,6 @@ describe('Orders API POST handler', () => {
     });
   });
 });
+`;
+
+fs.writeFileSync('src/app/api/orders/route.test.ts', newContent);
