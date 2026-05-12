@@ -4,12 +4,12 @@ import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/auth";
+import { checkAdminAuth } from "@/lib/auth";
 
 async function ensureAdmin() {
   const cookieStore = await cookies();
   const token = cookieStore.get("admin_token")?.value;
-  if (!verifyToken(token)) {
+  if (!(await checkAdminAuth())) {
     throw new Error("Unauthorized");
   }
 }
