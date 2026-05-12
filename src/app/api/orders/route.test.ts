@@ -71,7 +71,9 @@ describe('Orders API POST handler', () => {
       // Mock the transaction client
       const txMock = {
         product: {
+          findMany: vi.fn().mockResolvedValue([{ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }]),
           findUnique: vi.fn().mockResolvedValue({ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }),
+          findFirst: vi.fn().mockResolvedValue({ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }),
           update: vi.fn().mockResolvedValue({}),
         },
         customer: {
@@ -113,7 +115,9 @@ describe('Orders API POST handler', () => {
       // Mock the transaction client
       const txMock = {
         product: {
+          findMany: vi.fn().mockResolvedValue([{ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }]),
           findUnique: vi.fn().mockResolvedValue({ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }),
+          findFirst: vi.fn().mockResolvedValue({ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }),
           update: vi.fn().mockResolvedValue({}),
         },
         customer: {
@@ -146,8 +150,9 @@ describe('Orders API POST handler', () => {
     prismaMock.$transaction.mockImplementation(async (callback: unknown) => {
       const txMock = {
         product: {
-          // Mock product not found
+          findMany: vi.fn().mockResolvedValue([]),
           findUnique: vi.fn().mockResolvedValue(null),
+          findFirst: vi.fn().mockResolvedValue(null),
         },
       };
 
@@ -176,8 +181,9 @@ describe('Orders API POST handler', () => {
     prismaMock.$transaction.mockImplementation(async (callback: unknown) => {
       const txMock = {
         product: {
-          // Mock stock 10 (less than 20 requested)
+          findMany: vi.fn().mockResolvedValue([{ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }]),
           findUnique: vi.fn().mockResolvedValue({ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }),
+          findFirst: vi.fn().mockResolvedValue({ id: 'prod1', name: 'Product 1', price: 100, stock: 10 }),
         },
       };
 

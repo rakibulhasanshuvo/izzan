@@ -83,6 +83,7 @@ export const POST = apiHandler(async function POST(req: NextRequest) {
         }
 
         // Update in-memory tracker
+        const currentStock = stockTracker.get(item.id) || dbProduct.stock;
         stockTracker.set(item.id, currentStock - item.quantity);
 
         // Accumulate stock updates
@@ -95,8 +96,8 @@ export const POST = apiHandler(async function POST(req: NextRequest) {
       // Perform consolidated stock updates
       for (const [productId, quantity] of stockUpdates.entries()) {
         await tx.product.update({
-          where: { id: dbProduct.id },
-          data: { stock: { decrement: item.quantity } }
+          where: { id: productId },
+          data: { stock: { decrement: quantity } }
         });
       }
 

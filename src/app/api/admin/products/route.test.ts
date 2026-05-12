@@ -1,130 +1,168 @@
-import test from "node:test";
-import assert from "node:assert";
-import { mock } from "node:test";
-import { NextRequest } from "next/server";
-import { prisma } from "@/lib/db";
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { NextRequest } from 'next/server';
 
-/**
- * 🧪 Products API PATCH handler tests
- *
- * To run these tests:
- * node --experimental-strip-types --test src/app/api/admin/products/route.test.ts
- */
-
-process.env.ADMIN_TOKEN = "test-token";
-
-test("PATCH /api/admin/products - Missing ID", async () => {
-    const { PATCH } = await import("./route");
-
-    const req = new NextRequest("http://localhost/api/admin/products", {
-        method: "PATCH",
-        headers: {
-            "Authorization": "Bearer test-token"
-        },
-        body: JSON.stringify({})
-    });
-
-    const res = await PATCH(req);
-    assert.strictEqual(res.status, 400);
-    const data = await res.json();
-    assert.strictEqual(data.error, "Missing product ID");
+vi.mock('@/lib/db', async () => {
+  const { mockDeep } = await import('vitest-mock-extended');
+  return {
+    prisma: mockDeep(),
+  };
 });
 
-test("PATCH /api/admin/products - Product Not Found", async () => {
-    const { PATCH } = await import("./route");
+import { PATCH } from './route';
+import { prisma } from '@/lib/db';
+import { PrismaClient, Product } from '@/generated/client';
 
-    // Mock prisma.product.findUnique
-    const findUniqueMock = mock.method(prisma.product, "findUnique", async () => null);
+const prismaMock = prisma as unknown as ReturnType<typeof import('vitest-mock-extended').mockDeep<PrismaClient>>;
 
-    const req = new NextRequest("http://localhost/api/admin/products", {
-        method: "PATCH",
-        headers: {
-            "Authorization": "Bearer test-token"
-        },
-        body: JSON.stringify({ id: "non-existent" })
+describe('Products API PATCH handler', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  const createRequest = (body: Record<string, unknown>) => {
+    return new NextRequest('http://localhost:3000/api/admin/products', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
     });
+  };
 
-    const res = await PATCH(req);
-    assert.strictEqual(res.status, 404);
-    const data = await res.json();
-    assert.strictEqual(data.error, "Product not found");
+  it('should return 400 if product ID is missing', async () => {
+    const req = createRequest({ name: 'Valid Name' });
+    const response = await PATCH(req);
+    const data = await response.json();
 
-    findUniqueMock.mock.restore();
-});
+    expect(response.status).toBe(400);
+    expect(data.error).toBe('Missing product ID');
+  });
 
-test("PATCH /api/admin/products - Invalid Name", async () => {
-    const { PATCH } = await import("./route");
+  it('should return 400 if name is invalid (empty string)', async () => {
+    const req = createRequest({ id: 'prod1', name: '   ' });
+    const response = await PATCH(req);
+    const data = await response.json();
 
-    const req = new NextRequest("http://localhost/api/admin/products", {
-        method: "PATCH",
-        headers: {
-            "Authorization": "Bearer test-token"
-        },
-        body: JSON.stringify({ id: "123", name: "" })
+    expect(response.status).toBe(400);
+    expect(data.error).toBe('Name must be a non-empty string');
+  });
+
+  it('should return 400 if name is invalid (not a string)', async () => {
+    const req = createRequest({ id: 'prod1', name: 123 });
+    const response = await PATCH(req);
+    const data = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(data.error).toBe('Name must be a non-empty string');
+  });
+
+  it('should return 400 if price is invalid', async () => {
+    const req = createRequest({ id: 'prod1', price: 'abc' });
+    const response = await PATCH(req);
+    const data = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(data.error).toBe('Invalid price');
+  });
+
+  it('should return 400 if originalPrice is invalid', async () => {
+    const req = createRequest({ id: 'prod1', originalPrice: 'abc' });
+    const response = await PATCH(req);
+    const data = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(data.error).toBe('Invalid original price');
+  });
+
+  it('should set originalPrice to null if originalPrice is falsy', async () => {
+    const req = createRequest({ id: 'prod1', originalPrice: '' });
+
+    prismaMock.product.findUnique.mockResolvedValue({ id: 'prod1' } as Product);
+    prismaMock.product.update.mockResolvedValue({ id: 'prod1', originalPrice: null } as unknown as Product);
+
+    const response = await PATCH(req);
+    // Remove unused `data` assignment to fix warning
+
+    expect(response.status).toBe(200);
+    expect(prismaMock.product.update).toHaveBeenCalledWith({
+      where: { id: 'prod1' },
+      data: expect.objectContaining({ originalPrice: null }),
     });
+  });
 
-    const res = await PATCH(req);
-    assert.strictEqual(res.status, 400);
-    const data = await res.json();
-    assert.strictEqual(data.error, "Name must be a non-empty string");
-});
+  it('should return 400 if stock is invalid', async () => {
+    const req = createRequest({ id: 'prod1', stock: 'abc' });
+    const response = await PATCH(req);
+    const data = await response.json();
 
-test("PATCH /api/admin/products - Invalid Price", async () => {
-    const { PATCH } = await import("./route");
+    expect(response.status).toBe(400);
+    expect(data.error).toBe('Invalid stock');
+  });
 
-    const req = new NextRequest("http://localhost/api/admin/products", {
-        method: "PATCH",
-        headers: {
-            "Authorization": "Bearer test-token"
-        },
-        body: JSON.stringify({ id: "123", price: "invalid" })
+  it('should return 404 if product is not found', async () => {
+    const req = createRequest({ id: 'prod1', name: 'New Name' });
+
+    prismaMock.product.findUnique.mockResolvedValue(null);
+
+    const response = await PATCH(req);
+    const data = await response.json();
+
+    expect(response.status).toBe(404);
+    expect(data.error).toBe('Product not found');
+  });
+
+  it('should successfully update product and return it', async () => {
+    const validPayload = {
+      id: 'prod1',
+      name: '  New Product Name  ',
+      description: 'New description',
+      price: '19.99',
+      originalPrice: '29.99',
+      img: 'new.jpg',
+      hoverImg: 'new-hover.jpg',
+      categories: ['new-cat'],
+      badge: 'Sale',
+      stock: '15'
+    };
+
+    const req = createRequest(validPayload);
+
+    const existingProduct = { id: 'prod1', name: 'Old Product Name' };
+    const updatedProduct = {
+      id: 'prod1',
+      name: 'New Product Name',
+      description: 'New description',
+      price: 19.99,
+      originalPrice: 29.99,
+      img: 'new.jpg',
+      hoverImg: 'new-hover.jpg',
+      categories: ['new-cat'],
+      badge: 'Sale',
+      stock: 15
+    };
+
+    prismaMock.product.findUnique.mockResolvedValue(existingProduct as unknown as Product);
+    prismaMock.product.update.mockResolvedValue(updatedProduct as unknown as Product);
+
+    const response = await PATCH(req);
+    const data = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(data).toEqual(updatedProduct);
+
+    expect(prismaMock.product.update).toHaveBeenCalledWith({
+      where: { id: 'prod1' },
+      data: {
+        name: 'New Product Name', // Should be trimmed
+        description: 'New description',
+        price: 19.99,
+        originalPrice: 29.99,
+        img: 'new.jpg',
+        hoverImg: 'new-hover.jpg',
+        categories: ['new-cat'],
+        badge: 'Sale',
+        stock: 15
+      },
     });
-
-    const res = await PATCH(req);
-    assert.strictEqual(res.status, 400);
-    const data = await res.json();
-    assert.strictEqual(data.error, "Invalid price");
-});
-
-test("PATCH /api/admin/products - Invalid Stock", async () => {
-    const { PATCH } = await import("./route");
-
-    const req = new NextRequest("http://localhost/api/admin/products", {
-        method: "PATCH",
-        headers: {
-            "Authorization": "Bearer test-token"
-        },
-        body: JSON.stringify({ id: "123", stock: "abc" })
-    });
-
-    const res = await PATCH(req);
-    assert.strictEqual(res.status, 400);
-    const data = await res.json();
-    assert.strictEqual(data.error, "Invalid stock");
-});
-
-test("PATCH /api/admin/products - Successful Update", async () => {
-    const { PATCH } = await import("./route");
-
-    const mockProduct = { id: "123", name: "Old Name", price: 10, stock: 5 };
-    const findUniqueMock = mock.method(prisma.product, "findUnique", async () => mockProduct);
-    const updateMock = mock.method(prisma.product, "update", async ({ data }: any) => ({ ...mockProduct, ...data }));
-
-    const req = new NextRequest("http://localhost/api/admin/products", {
-        method: "PATCH",
-        headers: {
-            "Authorization": "Bearer test-token"
-        },
-        body: JSON.stringify({ id: "123", name: "New Name", price: 15, stock: 10 })
-    });
-
-    const res = await PATCH(req);
-    assert.strictEqual(res.status, 200);
-    const data = await res.json();
-    assert.strictEqual(data.name, "New Name");
-    assert.strictEqual(data.price, 15);
-    assert.strictEqual(data.stock, 10);
-
-    findUniqueMock.mock.restore();
-    updateMock.mock.restore();
+  });
 });
