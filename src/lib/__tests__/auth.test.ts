@@ -1,44 +1,28 @@
-import { NextRequest } from "next/server";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { checkAdminAuth } from "../auth";
+import * as nextAuth from "next-auth/next";
 
-// Mock the environment variable
-vi.mock("../env", () => ({
-  env: {
-    ADMIN_TOKEN: "secret_admin_token",
-  },
+vi.mock("next-auth/next", () => ({
+  getServerSession: vi.fn(),
 }));
 
 describe("checkAdminAuth", () => {
-  it("should return false if no authorization header is present", () => {
-    const req = new NextRequest("http://localhost");
-    expect(checkAdminAuth(req)).toBe(false);
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it("should return false if authorization header does not start with Bearer", () => {
-    const req = new NextRequest("http://localhost", {
-      headers: {
-        authorization: "Basic some_token",
-      },
-    });
-    expect(checkAdminAuth(req)).toBe(false);
+  it("should return false if no session is present", async () => {
+    vi.mocked(nextAuth.getServerSession).mockResolvedValue(null);
+    const result = await checkAdminAuth();
+    expect(result).toBe(false);
   });
 
-  it("should return false if token is incorrect", () => {
-    const req = new NextRequest("http://localhost", {
-      headers: {
-        authorization: "Bearer wrong_token",
-      },
+  it("should return true if session is present", async () => {
+    vi.mocked(nextAuth.getServerSession).mockResolvedValue({
+      user: { id: "user_1", name: "Admin" },
+      expires: "timestamp",
     });
-    expect(checkAdminAuth(req)).toBe(false);
-  });
-
-  it("should return true if token matches ADMIN_TOKEN", () => {
-    const req = new NextRequest("http://localhost", {
-      headers: {
-        authorization: "Bearer secret_admin_token",
-      },
-    });
-    expect(checkAdminAuth(req)).toBe(true);
+    const result = await checkAdminAuth();
+    expect(result).toBe(true);
   });
 });

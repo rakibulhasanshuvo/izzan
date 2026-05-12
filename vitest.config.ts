@@ -7,5 +7,8 @@ export default defineConfig({
   test: {
     environment: 'node', // Since we're testing a lib function
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+    env: {
+      ADMIN_TOKEN: 'secret_admin_token'
+    }
   },
 })
