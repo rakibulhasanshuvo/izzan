@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { updateSettings } from "@/app/(admin)/admin/actions";
-import { logger } from "@/lib/logger";
 
 import { AdminSettings } from "@/generated/client";
 
@@ -36,7 +35,7 @@ export default function SettingsFormClient({ initialSettings }: { initialSetting
       toast.success("Settings saved successfully.");
       router.refresh();
     } catch (error) {
-      logger.error("Error updating settings:", error);
+      console.error("Error updating settings:", error);
       toast.error("Error saving settings");
     } finally {
       setSaving(false);

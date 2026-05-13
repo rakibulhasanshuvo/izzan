@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { Product } from "@/generated/client";
-import { logger } from "@/lib/logger";
 
 export type CartItem = Product & { quantity: number };
 
@@ -32,7 +31,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setCartItems(JSON.parse(savedCart));
       } catch (e) {
-        logger.error("Failed to parse cart", e);
+        console.error("Failed to parse cart", e);
       }
     }
   }, []);

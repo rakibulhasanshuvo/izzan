@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { updateOrderStatus } from "@/app/(admin)/admin/actions";
-import { logger } from "@/lib/logger";
 
 import { Order } from "@/generated/client";
 
@@ -24,7 +23,7 @@ export default function OrdersTableClient({ initialOrders }: { initialOrders: Or
       router.refresh();
     } catch (error) {
       toast.error("Error updating order");
-      logger.error("Error updating order:", error);
+      console.error("Error updating order:", error);
     } finally {
       setUpdatingId(null);
     }

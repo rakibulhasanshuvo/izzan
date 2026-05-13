@@ -49,6 +49,7 @@ export const POST = apiHandler(async function POST(req: NextRequest) {
 
       // Track in-memory stock to handle multiple entries of same product in one order
       const stockTracker = new Map(dbProducts.map(p => [p.id, p.stock]));
+      const productMap = new Map(dbProducts.map(p => [p.id, p]));
       // Consolidate stock updates to reduce DB calls
       const stockUpdates = new Map<string, number>();
 
@@ -58,12 +59,12 @@ export const POST = apiHandler(async function POST(req: NextRequest) {
            throw new Error(`Invalid item structure for ${item.name || 'unknown item'}`);
         }
 
-        let dbProduct = productMap.get(item.id);
+        let dbProduct = productMap.get(item.id) || null;
 
         if (!dbProduct && item.name) {
           // Fallback to name-based lookup if ID changed across DB resets
           // Look up in our pre-fetched map
-          dbProduct = Array.from(productMap.values()).find(p => p.name === item.name);
+          dbProduct = Array.from(productMap.values()).find(p => p.name === item.name) || null;
 
           if (!dbProduct) {
              // Fallback to DB query only if not pre-fetched
