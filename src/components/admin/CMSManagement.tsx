@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { updateCMSContent } from "@/app/(admin)/admin/actions";
-import { logger } from "@/lib/logger";
 
 type CMSItem = {
   id: string;
@@ -44,13 +42,19 @@ export default function CMSManagement({ initialSections }: CMSManagementProps) {
   const handleSave = async (item: CMSItem) => {
     setIsSaving(item.id);
     try {
-      await updateCMSContent(item.id, item.value);
+      const response = await fetch("/api/admin/cms", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer admin_token_123" },
+        body: JSON.stringify({ id: item.id, value: item.value }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update content");
 
       toast.success(`Updated ${item.key}`);
       router.refresh();
     } catch (error) {
       toast.error("Error updating content");
-      logger.error("Error updating CMS data:", error);
+      console.error(error);
     } finally {
       setIsSaving(null);
     }

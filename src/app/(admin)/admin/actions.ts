@@ -3,19 +3,8 @@
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { cookies } from "next/headers";
-
-
-async function ensureAdmin() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("admin_token")?.value;
-  if (!token || token !== process.env.ADMIN_TOKEN) {
-    throw new Error("Unauthorized");
-  }
-}
 
 export async function updateOrderStatus(id: string, status: string) {
-  await ensureAdmin();
   if (!id || !status || typeof status !== "string" || status.trim() === "") {
     throw new Error("Invalid input");
   }
@@ -38,7 +27,6 @@ export async function updateOrderStatus(id: string, status: string) {
 }
 
 export async function deleteProduct(id: string) {
-  await ensureAdmin();
   if (!id) throw new Error("Missing product ID");
 
   await prisma.product.delete({
@@ -67,7 +55,6 @@ const ProductUpdateSchema = ProductSchema.partial().extend({
 });
 
 export async function createProduct(data: unknown) {
-  await ensureAdmin();
   const parsed = ProductSchema.safeParse(data);
   if (!parsed.success) {
     throw new Error("Missing required fields or invalid data");
@@ -92,7 +79,6 @@ export async function createProduct(data: unknown) {
 }
 
 export async function updateProduct(data: unknown) {
-  await ensureAdmin();
   const parsed = ProductUpdateSchema.safeParse(data);
   if (!parsed.success) {
     throw new Error("Missing product ID or invalid data");
@@ -132,7 +118,6 @@ const SettingsSchema = z.object({
 });
 
 export async function updateSettings(data: unknown) {
-  await ensureAdmin();
   const parsed = SettingsSchema.safeParse(data);
   if (!parsed.success) {
     throw new Error("Invalid settings data");
@@ -164,7 +149,6 @@ export async function updateSettings(data: unknown) {
 }
 
 export async function updateCMSContent(id: string, value: string) {
-  await ensureAdmin();
   if (!id || value === undefined || (typeof value === "string" && value.trim() === "")) {
     throw new Error("Missing required fields");
   }
