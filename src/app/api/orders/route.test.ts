@@ -105,7 +105,8 @@ describe('Orders API POST handler', () => {
     prismaMock.customer.findUnique.mockImplementation(async (args: unknown) => {
       const typedArgs = args as { where?: { phone?: string, email?: string } };
       if (typedArgs?.where?.phone) {
-        return { id: 'cust1', name: 'John Doe', phone: '01712345678', email: 'john@example.com', zila: 'Dhaka', upozila: 'Savar', location: 'Dhaka', totalSpend: 0, createdAt: new Date(), updatedAt: new Date() };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return { id: 'cust1', name: 'John Doe', phone: '01712345678', email: 'john@example.com', zila: 'Dhaka', upozila: 'Savar', location: 'Dhaka', totalSpend: 0, createdAt: new Date(), updatedAt: new Date(), tier: 'BRONZE' } as any;
       }
       return null;
     });
