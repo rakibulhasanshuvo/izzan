@@ -142,3 +142,30 @@ describe('apiHandler', () => {
     );
   });
 });
+
+  it('should pass additional arguments to the wrapped handler', async () => {
+    const successResponse = { body: { ok: true }, init: { status: 200 } };
+    const handler = vi.fn().mockResolvedValue(successResponse);
+    const wrappedHandler = apiHandler(handler);
+
+    const extraArg1 = { params: { id: '123' } };
+    const extraArg2 = 'some-other-arg';
+
+    await wrappedHandler({} as NextRequest, extraArg1, extraArg2);
+    expect(handler).toHaveBeenCalledWith({} as NextRequest, extraArg1, extraArg2);
+  });
+
+  it('should correctly log the error when an exception is thrown', async () => {
+    const loggerModule = await import('@/lib/logger');
+    const logger = loggerModule.default;
+    const loggerSpy = vi.spyOn(logger, 'error');
+
+    const testError = new Error('Test logging error');
+    const handler = vi.fn().mockRejectedValue(testError);
+    const wrappedHandler = apiHandler(handler);
+
+    await wrappedHandler({} as NextRequest);
+
+    expect(loggerSpy).toHaveBeenCalledWith("API Error:", { error: testError });
+    loggerSpy.mockRestore();
+  });
