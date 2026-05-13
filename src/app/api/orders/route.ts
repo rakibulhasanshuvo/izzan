@@ -47,9 +47,9 @@ export const POST = apiHandler(async function POST(req: NextRequest) {
         where: { id: { in: productIds } }
       });
 
-      const productMap = new Map(dbProducts.map(p => [p.id, p]));
-      // Track in-memory stock to handle multiple entries of same product in one order
-      const stockTracker = new Map(dbProducts.map(p => [p.id, p.stock]));
+            // Track in-memory stock to handle multiple entries of same product in one order
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const stockTracker = new Map(dbProducts.map((p: any) => [p.id, p.stock]));
       // Consolidate stock updates to reduce DB calls
       const stockUpdates = new Map<string, number>();
 
@@ -73,13 +73,14 @@ export const POST = apiHandler(async function POST(req: NextRequest) {
         if (!dbProduct) {
           throw new Error(`Product not found: ${item.name || item.id}`);
         }
+        const currentStock = stockTracker.get(dbProduct.id) ?? dbProduct.stock;
 
         // Ensure we're using the correct current ID from the DB
         item.id = dbProduct.id;
         item.price = dbProduct.price; // Update price from DB to avoid mismatched data
 
-        if (dbProduct.stock < item.quantity) {
-          throw new Error(`Insufficient stock for ${dbProduct.name}. Only ${dbProduct.stock} left.`);
+        if (currentStock < item.quantity) {
+          throw new Error(`Insufficient stock for ${dbProduct.name}. Only ${currentStock} left.`);
         }
 
         // Update in-memory tracker
@@ -95,8 +96,8 @@ export const POST = apiHandler(async function POST(req: NextRequest) {
       // Perform consolidated stock updates
       for (const [productId, quantity] of stockUpdates.entries()) {
         await tx.product.update({
-          where: { id: dbProduct.id },
-          data: { stock: { decrement: item.quantity } }
+          where: { id: productId },
+          data: { stock: { decrement: quantity } }
         });
       }
 
