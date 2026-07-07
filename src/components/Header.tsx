@@ -1,14 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Sun, Moon, Menu, X, ArrowRight } from "lucide-react";
+import { ShoppingCart, Sun, Moon, ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { CartDrawer } from "./CartDrawer";
 import { Search } from "./Search";
-import FocusTrap from "focus-trap-react";
 import { useMounted } from "@/hooks/useMounted";
 
 interface HeaderProps {
@@ -18,11 +15,7 @@ interface HeaderProps {
 export function Header({ onViewAllProducts }: HeaderProps) {
   const { setTheme, resolvedTheme } = useTheme();
   const mounted = useMounted();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cartCount, toggleCart } = useCart();
-
-  const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const closeMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <>
@@ -31,7 +24,7 @@ export function Header({ onViewAllProducts }: HeaderProps) {
       </div>
       <header className="w-full bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 py-4 px-6 md:px-12 border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
         <div className="max-w-[1600px] mx-auto flex justify-between items-center relative z-20">
-          <Link href="/" onClick={closeMenu} className="text-3xl md:text-4xl font-logo text-text-light dark:text-text-dark">
+          <Link href="/" className="text-3xl md:text-4xl font-logo text-text-light dark:text-text-dark">
             Izzan
           </Link>
           <nav className="hidden md:flex space-x-10">
@@ -66,38 +59,8 @@ export function Header({ onViewAllProducts }: HeaderProps) {
                 </span>
               )}
             </button>
-            <button
-              className="md:hidden text-text-light dark:text-text-dark hover:text-primary transition-colors"
-              aria-label="Toggle mobile menu"
-              onClick={toggleMenu}
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </div>
-
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <FocusTrap focusTrapOptions={{ fallbackFocus: "body", escapeDeactivates: false }}>
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="md:hidden absolute top-full left-0 right-0 bg-background-light dark:bg-background-dark border-b border-gray-200 dark:border-gray-800 overflow-hidden shadow-lg z-10"
-                role="dialog"
-                aria-modal="true"
-                aria-label="Mobile Menu"
-              >
-              <nav className="flex flex-col px-8 py-6 space-y-8">
-                <Link href="/#shop" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Shop</Link>
-                <Link href="/#story" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Story</Link>
-                <Link href="/#discover" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Discover</Link>
-                <Link href="/#reviews" onClick={closeMenu} className="text-sm tracking-widest uppercase hover:text-primary transition-colors">Reviews</Link>
-              </nav>
-              </motion.div>
-            </FocusTrap>
-          )}
-        </AnimatePresence>
       </header>
       <CartDrawer />
     </>

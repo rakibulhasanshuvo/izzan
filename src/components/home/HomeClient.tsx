@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { CollectionDrawer } from "@/components/CollectionDrawer";
 import { Product } from "@/generated/client";
 
@@ -38,7 +39,7 @@ export default function HomeClient({ products, cms }: HomeClientProps) {
   return (
     <>
       <Header onViewAllProducts={useCallback(() => handleExplore("Full Collection", products), [handleExplore, products])} />
-      <main className="flex-1">
+      <main className="flex-1 pb-16 md:pb-0">
         <Hero title={cms.hero_title} subtitle={cms.hero_subtitle} videoUrl={cms.hero_video_url} posterUrl={cms.hero_video_poster} />
         <Pillars images={[cms.pillar_1_img, cms.pillar_2_img, cms.pillar_3_img].filter(Boolean)} />
         <ShopSection
@@ -57,6 +58,7 @@ export default function HomeClient({ products, cms }: HomeClientProps) {
         <ContactSection />
       </main>
       <Footer />
+      <MobileBottomNav />
       <CollectionDrawer
         isOpen={!!drawerContent}
         onClose={() => setDrawerContent(null)}

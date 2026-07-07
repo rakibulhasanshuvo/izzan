@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { test, expect, vi, describe, beforeEach, it } from "vitest";
+import { expect, vi, describe, beforeEach, it } from "vitest";
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import * as auth from "@/lib/auth";

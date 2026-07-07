@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MapPin, Phone, User, Home, Mail } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import FocusTrap from "focus-trap-react";
 import { IMaskInput } from "react-imask";
 import { toast } from "sonner";
@@ -16,7 +16,7 @@ interface CheckoutModalProps {
 export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const { cartItems, cartTotal, clearCart, toggleCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [idempotencyKey, setIdempotencyKey] = useState("");
+  const idempotencyKeyRef = useRef("");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -28,7 +28,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   useEffect(() => {
     if (isOpen) {
-      setIdempotencyKey(crypto.randomUUID());
+      idempotencyKeyRef.current = crypto.randomUUID();
     }
   }, [isOpen]);
 
@@ -52,7 +52,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           ...formData,
           items: cartItems.map(item => ({ id: item.id, name: item.name, price: item.price, quantity: item.quantity })),
           totalAmount: cartTotal,
-          idempotencyKey,
+          idempotencyKey: idempotencyKeyRef.current,
         }),
       });
 

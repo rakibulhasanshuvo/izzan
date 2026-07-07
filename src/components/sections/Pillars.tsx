@@ -57,6 +57,7 @@ export function Pillars({ images = [] }: { images?: string[] }) {
               src={images[idx] || pillar.img}
               alt=""
               fill 
+              sizes="(max-width: 768px) 100vw, 33vw"
               className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:via-black/40 transition-all duration-500"></div>

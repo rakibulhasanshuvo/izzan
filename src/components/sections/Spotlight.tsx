@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";

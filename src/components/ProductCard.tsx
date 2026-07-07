@@ -33,6 +33,7 @@ export function ProductCard({ item }: { item: Product }) {
           className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
           src={item.img}
           fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           draggable={false}
 
         />

@@ -46,6 +46,7 @@ export function Community({ images = [] }: { images?: string[] }) {
                 className="object-cover hover:scale-105 transition-transform duration-500" 
                 src={images[idx] || img}
                 fill 
+                sizes="(max-width: 768px) 50vw, 25vw"
               />
             </motion.div>
           ))}

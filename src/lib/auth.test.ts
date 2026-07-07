@@ -18,15 +18,15 @@ describe("auth limits and checks", () => {
   });
 
   describe("checkRateLimit", () => {
-    it("should allow first request", () => {
-      expect(checkRateLimit("1.1.1.1")).toBe(true);
+    it("should allow first request", async () => {
+      expect(await checkRateLimit("1.1.1.1")).toBe(true);
       expect(rateLimitMap.has("1.1.1.1")).toBe(true);
       expect(rateLimitMap.get("1.1.1.1")?.count).toBe(1);
     });
 
-    it("should increment count for existing request", () => {
-      checkRateLimit("2.2.2.2");
-      expect(checkRateLimit("2.2.2.2")).toBe(true);
+    it("should increment count for existing request", async () => {
+      await checkRateLimit("2.2.2.2");
+      expect(await checkRateLimit("2.2.2.2")).toBe(true);
       expect(rateLimitMap.get("2.2.2.2")?.count).toBe(2);
     });
   });

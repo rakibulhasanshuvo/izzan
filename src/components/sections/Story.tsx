@@ -56,6 +56,7 @@ export function Story({ title, content, imgUrl }: { title?: string, content?: st
             src={imgUrl || "/images/story-workshop.png"}
             alt="Hand pouring candles"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
         </motion.div>
